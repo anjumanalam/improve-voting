@@ -26,7 +26,8 @@ library(arulesViz)
 
 
 #import data-set of results from poll on why Americans don't vote
-
+nonvoters_data <- read_csv("nonvoters_data.csv")
+View(nonvoters_data)
 
 #
 
