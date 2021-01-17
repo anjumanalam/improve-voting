@@ -28,17 +28,18 @@ library(caret)
 
 
 #---- DATA COLLECTION ----
-#import data-set of results from poll on why Americans don't vote
+# import data-set of results from poll on why Americans don't vote
 nonvoters_data <- read_csv("nonvoters_data.csv")
 
-#view information on data-set
+# view information on data-set
 summary(nonvoters_data)
 glimpse(nonvoters_data)
+hist(nonvoters_data$Q1)
 
-#rename columns for clarification
-# nonvoters_data %>% 
+# rename columns for clarification
+# nonvoters_data %>%
 #   rename(
-#     Q1 = is_citizen, #remove from data-set if value = 2
+#     Q1 = is_citizen,
 #     Q2_1 = voting_important,
 #     Q2_2 = jury_important,
 #     Q2_3 = follow_politics_important,
@@ -80,7 +81,7 @@ glimpse(nonvoters_data)
 #     Q10_1 = have_long-term_disability,
 #     Q10_2 = have_chronic_illness,
 #     Q10_3 = been_unemployed_mt_one_yr,
-#     Q10_4 = been_evicted_within_year,
+#     Q10_4 = been_evicted_within_year, #remove
 #     Q11_1 = lost_job_due_to_covid, #remove
 #     Q11_2 = tested_positive_covid, #remove
 #     Q11_3 = friend_family_positive_covid, #remove
@@ -113,7 +114,7 @@ glimpse(nonvoters_data)
 #     Q19_7 = register_vote_same_day,
 #     Q19_8 = vote_by_phone_online,
 #     Q19_9 = increase_candidate_options,
-#     Q19_10 = other_reason_to_increase_voting, #remove
+#     Q19_10 = other_reason_to_increase_voting, #remove?
 #     Q20 = is_registered,
 #     Q21 = is_voting_nov2020, #remove
 #     Q22 = why_not_registered,
@@ -134,7 +135,7 @@ glimpse(nonvoters_data)
 #     Q28_5 = specific_issue,
 #     Q28_6 = enjoy_voting,
 #     Q28_7 = voting_easy,
-#     Q28_8 = other_reason_decided_to_vote, #remove
+#     Q28_8 = other_reason_decided_to_vote, #remove?
 #     Q29_1 = not_voted_not_like_candidates,
 #     Q29_2 = not_voted_vote_not_matter,
 #     Q29_3 = not_voted_nothing_change,
@@ -144,7 +145,7 @@ glimpse(nonvoters_data)
 #     Q29_7 = not_voted_personal_important_issues_not_discussed,
 #     Q29_8 = not_voted_candidates_same,
 #     Q29_9 = not_voted_no_belief_voting,
-#     Q29_10 = other_reason_not_voted,
+#     Q29_10 = other_reason_not_voted, #remove?
 #     Q30 = party_affiliation,
 #     Q31 = is_strong_repulican,
 #     Q32 = is_strong_democrat,
@@ -154,16 +155,27 @@ glimpse(nonvoters_data)
 
 #---- DATA MUNGING ----
 
-#remove information related to 2020 election; we are analyzing general reason why Americans do not vote
-clean_data <- select(nonvoters_data, -c(columnName, 
-                                        columnName, 
-                                        columnName))
+# remove information related to 2020 election/Covid-19; we are analyzing general reason why Americans do not vote
+clean_data <- select(nonvoters_data, -c(Q1, #all survey takers in data-set are citizens
+                                        Q5, #2020
+                                        Q10_4, #related to COVID-19 / "past year"
+                                        Q11_1, #Q11 related to 2020
+                                        Q11_2,
+                                        Q11_3,
+                                        Q11_4,
+                                        Q11_5,
+                                        Q11_6,
+                                        Q21,   #2020 elections related
+                                        Q23,   #2020 elections related
+                                        Q25))  #2020 elections related
 
-#remove rows with NA
+
+
+# remove rows with NA
 
 
 
-#separate voters into groups: nonvoters, always voters, sometimes voters
+# separate voters into groups: nonvoters, always voters, sometimes voters
 nonvoters <- clean_data$voter_category("rarely/never")
 alwaysvoters <- clean_data$voter_category("always")
 sometimesvoters <- clean_data$voter_category("sporadic")
