@@ -1,6 +1,4 @@
 ################################################
-# IST687, Standard Homework Heading
-#
 # Student name: Anjuman Alam
 # Final Project
 # Date due: January 17, 2021
@@ -10,8 +8,8 @@
 #
 
 dev.off() # Clear the graph window
-cat('\014')   # Clear the console
 rm(list=ls()) # Clear user objects from the environment
+cat('\014')   # Clear the console
 
 # import packages
 library(tidyverse)
@@ -20,16 +18,59 @@ library(kernlab)
 library(arules)
 library(e1071)
 library(arulesViz)
+library(maps)
+library(mapproj)
+library(ggmap)
+library(caret)
 
 # User-defined functions
 
 
 
+#---- DATA COLLECTION ----
 #import data-set of results from poll on why Americans don't vote
 nonvoters_data <- read_csv("nonvoters_data.csv")
-View(nonvoters_data)
+
+#view information on data-set
+summary(nonvoters_data)
+glimpse(nonvoters_data)
+str(nonvoters_data)
+
+#---- DATA EXPLORATION ----
 
 #
+
+
+
+
+#---- DATA MUNGING ----
+
+#rename columns for clarification
+
+
+#clean data to include only people we have voting history of
+
+
+
+#separate voters into groups: nonvoters, sometimes voters, and always voters
+
+
+
+#---- DATA EXPLORATION (with clean data) ----
+
+#
+
+
+#---- DATA MODELING ----
+
+#
+
+
+
+#---- INSIGHTS ----
+
+#
+
 
 
 
