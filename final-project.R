@@ -5,7 +5,9 @@
 #
 # Attribution statement:
 # 2. I did this project with help from the book and the professor and these Internet sources:
-#
+# https://www.statmethods.net/management/operators.html
+# https://www.guru99.com/r-data-frames.html#:~:text=We%20can%20create%20a%20dataframe,the%20name%20of%20the%20variables.
+# https://www.datanovia.com/en/lessons/rename-data-frame-columns-in-r/
 
 dev.off() # Clear the graph window
 rm(list=ls()) # Clear user objects from the environment
