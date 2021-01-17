@@ -169,17 +169,17 @@ clean_data <- select(nonvoters_data, -c(Q1, #all survey takers in data-set are c
                                         Q23,   #2020 elections related
                                         Q25))  #2020 elections related
 
-
-
-# remove rows with NA
-
+#take a peak at clean_data to ensure columns are deleted
+glimpse(clean_data)
 
 
 # separate voters into groups: nonvoters, always voters, sometimes voters
-nonvoters <- clean_data$voter_category("rarely/never")
-alwaysvoters <- clean_data$voter_category("always")
-sometimesvoters <- clean_data$voter_category("sporadic")
+nonvoters <- subset(clean_data, clean_data$voter_category == "rarely/never")
+alwaysvoters <- subset(clean_data, clean_data$voter_category == "always")
+sometimesvoters <- subset(clean_data, clean_data$voter_category == "sporadic")
 
+#create subset we want to study: people who rarely vote and sometimes vote
+survey_data <- subset(clean_data, clean_data$voter_category != "always")
 
 #---- DATA EXPLORATION ----
 
