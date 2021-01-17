@@ -38,7 +38,7 @@ glimpse(nonvoters_data)
 #rename columns for clarification
 nonvoters_data %>% 
   rename(
-    Q1 = is_citizen,
+    Q1 = is_citizen, #remove from data-set if value = 2
     Q2_1 = voting_important,
     Q2_2 = jury_important,
     Q2_3 = follow_politics_important,
@@ -61,7 +61,7 @@ nonvoters_data %>%
     Q4_4 = impact_of_news,
     Q4_5 = impact_of_wall_st,
     Q4_6 = impact_of_law_enforcement,
-    Q5 = election_importance_2020,
+    Q5 = election_importance_2020, #remove
     Q6 = current_elected_office_similarity_to_me,
     Q7 = change_govt_structure,
     Q8_1 = trust_in_presidency,
@@ -81,12 +81,12 @@ nonvoters_data %>%
     Q10_2 = have_chronic_illness,
     Q10_3 = been_unemployed_mt_one_yr,
     Q10_4 = been_evicted_within_year,
-    Q11_1 = lost_job_due_to_covid,
-    Q11_2 = tested_positive_covid,
-    Q11_3 = friend_family_positive_covid,
-    Q11_4 = friend_family_die_covid,
-    Q11_5 = worry_paying_living_expenses,
-    Q11_6 = quit_job_care_for_family,
+    Q11_1 = lost_job_due_to_covid, #remove
+    Q11_2 = tested_positive_covid, #remove
+    Q11_3 = friend_family_positive_covid, #remove
+    Q11_4 = friend_family_die_covid, #remove
+    Q11_5 = worry_paying_living_expenses, #remove
+    Q11_6 = quit_job_care_for_family, #remove
     Q14 = republican_attitude_toward_me,
     Q15 = democrat_attitude_toward_me,
     Q16 = easy_difficult_vote_national_elections,
@@ -113,7 +113,7 @@ nonvoters_data %>%
     Q19_7 = register_vote_same_day,
     Q19_8 = vote_by_phone_online,
     Q19_9 = increase_candidate_options,
-    Q19_10 = other, #remove
+    Q19_10 = other_reason_to_increase_voting, #remove
     Q20 = is_registered,
     Q21 = is_voting_nov2020, #remove
     Q22 = why_not_registered,
@@ -134,7 +134,7 @@ nonvoters_data %>%
     Q28_5 = specific_issue,
     Q28_6 = enjoy_voting,
     Q28_7 = voting_easy,
-    Q28_8 = other,
+    Q28_8 = other_reason_decided_to_vote, #remove
     Q29_1 = not_voted_not_like_candidates,
     Q29_2 = not_voted_vote_not_matter,
     Q29_3 = not_voted_nothing_change,
@@ -144,7 +144,7 @@ nonvoters_data %>%
     Q29_7 = not_voted_personal_important_issues_not_discussed,
     Q29_8 = not_voted_candidates_same,
     Q29_9 = not_voted_no_belief_voting,
-    Q29_10 = other,
+    Q29_10 = other_reason_not_voted,
     Q30 = party_affiliation,
     Q31 = is_strong_repulican,
     Q32 = is_strong_democrat,
