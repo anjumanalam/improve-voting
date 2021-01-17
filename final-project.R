@@ -94,68 +94,72 @@ nonvoters_data %>%
     Q17_2 = inperson_ballot_safe_from_fraud,
     Q17_3 = mail_ballot_safe_from_fraud,
     Q17_4 = electronic_vote_safe_from_fraud,
-    Q18_1 = Sepal.Width,
-    Q18_2 = ,
-    Q18_3 = Sepal.Width,
-    Q18_4 = ,
-    Q18_5 = Sepal.Width,
-    Q18_6 = ,
-    Q18_7 = Sepal.Width,
-    Q18_8 = ,
-    Q18_9 = Sepal.Width,
-    Q18_10 = ,
-    Q19_1 = Sepal.Width,
-    Q19_2 = ,
-    Q19_3 = Sepal.Width,
-    Q19_4 = ,
-    Q19_5 = Sepal.Width,
-    Q19_6 = ,
-    Q19_7 = Sepal.Width,
-    Q19_8 = ,
-    Q19_9 = Sepal.Width,
-    Q19_10 = ,
-    Q20 = ,
-    Q21 = ,
-    Q22 = ,
-    Q23 = ,
-    Q24 = ,
-    Q25 = ,
-    Q26 = ,
-    Q27_1 = Sepal.Width,
-    Q27_2 = ,
-    Q27_3 = Sepal.Width,
-    Q27_4 = ,
-    Q27_5 = Sepal.Width,
-    Q27_6 = ,
-    Q28_1 = Sepal.Width,
-    Q28_2 = ,
-    Q28_3 = Sepal.Width,
-    Q28_4 = ,
-    Q28_5 = Sepal.Width,
-    Q28_6 = ,
-    Q28_7 = Sepal.Width,
-    Q28_8 = ,
-    Q29_1 = Sepal.Width,
-    Q29_2 = ,
-    Q29_3 = Sepal.Width,
-    Q29_4 = ,
-    Q29_5 = Sepal.Width,
-    Q29_6 = ,
-    Q29_7 = Sepal.Width,
-    Q29_8 = ,
-    Q29_9 = Sepal.Width,
-    Q29_10 = ,
-    Q30 = ,
-    Q31 = ,
-    Q32 = ,
-    Q33 = ,
+    Q18_1 = vote_incorrect_id,
+    Q18_2 = vote_cannot_find_polls,
+    Q18_3 = vote_miss_reg_deadline,
+    Q18_4 = vote_cannot_physically_access_polls,
+    Q18_5 = vote_no_assistance_fill_ballot,
+    Q18_6 = vote_cast_prov_ballot,
+    Q18_7 = vote_cannot_get_work_off,
+    Q18_8 = vote_waited_more_hr,
+    Q18_9 = vote_registered_but_name_not_listed,
+    Q18_10 = vote_absentee_ballot_late,
+    Q19_1 = outreach_from_candidates,
+    Q19_2 = unbiased_candidate_info,
+    Q19_3 = election_day_holiday,
+    Q19_4 = automatic_registration,
+    Q19_5 = automatic_mail_ballot_delivery,
+    Q19_6 = vote_in-person_b4_election_day,
+    Q19_7 = register_vote_same_day,
+    Q19_8 = vote_by_phone_online,
+    Q19_9 = increase_candidate_options,
+    Q19_10 = other, #remove
+    Q20 = is_registered,
+    Q21 = is_voting_nov2020, #remove
+    Q22 = why_not_registered,
+    Q23 = president_support_2020, #remove
+    Q24 = preferred_voting_method,
+    Q25 = how_close_follow_2020elections, #remove
+    Q26 = self_describe_voter_category,
+    Q27_1 = voted_congress_2018,
+    Q27_2 = voted_president_2016,
+    Q27_3 = voted_congress_2014,
+    Q27_4 = voted_president_2012,
+    Q27_5 = voted_congress_2010,
+    Q27_6 = voted_president_2008,
+    Q28_1 = voting_important_civic_duty,
+    Q28_2 = excited_about_candidate,
+    Q28_3 = disliked_candidate,
+    Q28_4 = support_political_party,
+    Q28_5 = specific_issue,
+    Q28_6 = enjoy_voting,
+    Q28_7 = voting_easy,
+    Q28_8 = other,
+    Q29_1 = not_voted_not_like_candidates,
+    Q29_2 = not_voted_vote_not_matter,
+    Q29_3 = not_voted_nothing_change,
+    Q29_4 = not_voted_system_cannot_fix,
+    Q29_5 = not_voted_unavailable,
+    Q29_6 = not_voted_unsure_eligibility,
+    Q29_7 = not_voted_personal_important_issues_not_discussed,
+    Q29_8 = not_voted_candidates_same,
+    Q29_9 = not_voted_no_belief_voting,
+    Q29_10 = other,
+    Q30 = party_affiliation,
+    Q31 = is_strong_repulican,
+    Q32 = is_strong_democrat,
+    Q33 = is_closer_to_rep_or_dem,
     ppage = age
   )
 
 #---- DATA MUNGING ----
 
+#remove information related to 2020 election; we are analyzing general reason why Americans do not vote
+clean_data <- select(nonvoters_data, -c(columnName, 
+                                        columnName, 
+                                        columnName))
 
-#clean data to include only people we have voting history of
+#remove rows with NA
 
 
 
@@ -172,6 +176,10 @@ nonvoters_data %>%
 
 #
 
+
+
+
+#plot()
 
 
 #---- INSIGHTS ----
