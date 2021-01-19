@@ -1,7 +1,7 @@
 ################################################
 # Student name: Anjuman Alam
 # Final Project
-# Date due: January 17, 2021
+# Date due: January 18, 2021
 #
 # Attribution statement:
 # 2. I did this project with help from the book and the professor and these Internet sources:
@@ -26,7 +26,10 @@ library(ggmap)
 library(caret)
 
 # User-defined functions
-
+countNum <- function(v) {
+  selected <- length(which(v == 1))
+  return(selected)
+}
 
 
 #---- DATA COLLECTION ----
@@ -36,130 +39,16 @@ nonvoters_data <- read_csv("nonvoters_data.csv")
 # view information on data-set
 summary(nonvoters_data)
 glimpse(nonvoters_data)
-hist(nonvoters_data$Q1)
-
-# rename columns for clarification
-# nonvoters_data %>%
-#   rename(
-#     Q1 = is_citizen,
-#     Q2_1 = voting_important,
-#     Q2_2 = jury_important,
-#     Q2_3 = follow_politics_important,
-#     Q2_4 = display_flag_important,
-#     Q2_5 = participate_in_census_important,
-#     Q2_6 = know_poa_important,
-#     Q2_7 = support_military_important,
-#     Q2_8 = respect_opposing_opinions_important,
-#     Q2_9 = believe_god_important,
-#     Q2_10 = protest_govt_if_wrong_important,
-#     Q3_1 = systemic_racism_problem,
-#     Q3_2 = systemic_racism_police_over_violent_protest,
-#     Q3_3 = society_soft_feminine,
-#     Q3_4 = media_prioritize_money_over_truth,
-#     Q3_5 = political_parties_dont_care_me,
-#     Q3_6 = change_speech_with_times,
-#     Q4_1 = impact_of_dc_officials,
-#     Q4_2 = impact_of_state_officials,
-#     Q4_3 = impact_of_city_officials,
-#     Q4_4 = impact_of_news,
-#     Q4_5 = impact_of_wall_st,
-#     Q4_6 = impact_of_law_enforcement,
-#     Q5 = election_importance_2020, #remove
-#     Q6 = current_elected_office_similarity_to_me,
-#     Q7 = change_govt_structure,
-#     Q8_1 = trust_in_presidency,
-#     Q8_2 = trust_in_congress,
-#     Q8_3 = trust_in_sc,
-#     Q8_4 = trust_in_cdc,
-#     Q8_5 = trust_in_election_officials,
-#     Q8_6 = trust_in_fbi_cia,
-#     Q8_7 = trust_in_news,
-#     Q8_8 = trust_in_police,
-#     Q8_9 = trust_in_usps,
-#     Q9_1 = prefer_democracy_governance,
-#     Q9_2 = prefer_expert_governance,
-#     Q9_3 = prefer_leader_without_congress_governance,
-#     Q9_4 = prefer_army_rule_governance,
-#     Q10_1 = have_long-term_disability,
-#     Q10_2 = have_chronic_illness,
-#     Q10_3 = been_unemployed_mt_one_yr,
-#     Q10_4 = been_evicted_within_year, #remove
-#     Q11_1 = lost_job_due_to_covid, #remove
-#     Q11_2 = tested_positive_covid, #remove
-#     Q11_3 = friend_family_positive_covid, #remove
-#     Q11_4 = friend_family_die_covid, #remove
-#     Q11_5 = worry_paying_living_expenses, #remove
-#     Q11_6 = quit_job_care_for_family, #remove
-#     Q14 = republican_attitude_toward_me,
-#     Q15 = democrat_attitude_toward_me,
-#     Q16 = easy_difficult_vote_national_elections,
-#     Q17_1 = inperson_machine_safe_from_fraud,
-#     Q17_2 = inperson_ballot_safe_from_fraud,
-#     Q17_3 = mail_ballot_safe_from_fraud,
-#     Q17_4 = electronic_vote_safe_from_fraud,
-#     Q18_1 = vote_incorrect_id,
-#     Q18_2 = vote_cannot_find_polls,
-#     Q18_3 = vote_miss_reg_deadline,
-#     Q18_4 = vote_cannot_physically_access_polls,
-#     Q18_5 = vote_no_assistance_fill_ballot,
-#     Q18_6 = vote_cast_prov_ballot,
-#     Q18_7 = vote_cannot_get_work_off,
-#     Q18_8 = vote_waited_more_hr,
-#     Q18_9 = vote_registered_but_name_not_listed,
-#     Q18_10 = vote_absentee_ballot_late,
-#     Q19_1 = outreach_from_candidates,
-#     Q19_2 = unbiased_candidate_info,
-#     Q19_3 = election_day_holiday,
-#     Q19_4 = automatic_registration,
-#     Q19_5 = automatic_mail_ballot_delivery,
-#     Q19_6 = vote_in-person_b4_election_day,
-#     Q19_7 = register_vote_same_day,
-#     Q19_8 = vote_by_phone_online,
-#     Q19_9 = increase_candidate_options,
-#     Q19_10 = other_reason_to_increase_voting, #remove?
-#     Q20 = is_registered,
-#     Q21 = is_voting_nov2020, #remove
-#     Q22 = why_not_registered,
-#     Q23 = president_support_2020, #remove
-#     Q24 = preferred_voting_method,
-#     Q25 = how_close_follow_2020elections, #remove
-#     Q26 = self_describe_voter_category,
-#     Q27_1 = voted_congress_2018,
-#     Q27_2 = voted_president_2016,
-#     Q27_3 = voted_congress_2014,
-#     Q27_4 = voted_president_2012,
-#     Q27_5 = voted_congress_2010,
-#     Q27_6 = voted_president_2008,
-#     Q28_1 = voting_important_civic_duty,
-#     Q28_2 = excited_about_candidate,
-#     Q28_3 = disliked_candidate,
-#     Q28_4 = support_political_party,
-#     Q28_5 = specific_issue,
-#     Q28_6 = enjoy_voting,
-#     Q28_7 = voting_easy,
-#     Q28_8 = other_reason_decided_to_vote, #remove?
-#     Q29_1 = not_voted_not_like_candidates,
-#     Q29_2 = not_voted_vote_not_matter,
-#     Q29_3 = not_voted_nothing_change,
-#     Q29_4 = not_voted_system_cannot_fix,
-#     Q29_5 = not_voted_unavailable,
-#     Q29_6 = not_voted_unsure_eligibility,
-#     Q29_7 = not_voted_personal_important_issues_not_discussed,
-#     Q29_8 = not_voted_candidates_same,
-#     Q29_9 = not_voted_no_belief_voting,
-#     Q29_10 = other_reason_not_voted, #remove?
-#     Q30 = party_affiliation,
-#     Q31 = is_strong_repulican,
-#     Q32 = is_strong_democrat,
-#     Q33 = is_closer_to_rep_or_dem,
-#     ppage = age
-#   )
 
 #---- DATA MUNGING ----
 
+# remove rows with 'NA' in Likelihood.to.recommend column
+# clean_data <- nonvoters_data[!is.na(nonvoters_data$Likelihood.to.recommend),]
+
 # remove information related to 2020 election/Covid-19; we are analyzing general reason why Americans do not vote
-clean_data <- select(nonvoters_data, -c(Q1, #all survey takers in data-set are citizens
-                                        Q5, #2020
+clean_data <- select(nonvoters_data, -c(Q1,    #all survey takers in data-set are citizens
+                                        Q5,    #2020 elections
+                                        Q8_4,  #CDC more related to COVID-19
                                         Q10_4, #related to COVID-19 / "past year"
                                         Q11_1, #Q11 related to 2020
                                         Q11_2,
@@ -169,33 +58,332 @@ clean_data <- select(nonvoters_data, -c(Q1, #all survey takers in data-set are c
                                         Q11_6,
                                         Q21,   #2020 elections related
                                         Q23,   #2020 elections related
-                                        Q25))  #2020 elections related
+                                        Q25,   #2020 elections related
+                                        Q31,   #strength of party affiliation not necessary
+                                        Q32,   #strength of party affiliation not necessary
+                                        Q33))  #strength of party affiliation not necessary
 
 #take a peak at clean_data to ensure columns are deleted
+summary(clean_data)
 glimpse(clean_data)
 
-
-# separate voters into groups: nonvoters, always voters, sometimes voters
-nonvoters <- subset(clean_data, clean_data$voter_category == "rarely/never")
-alwaysvoters <- subset(clean_data, clean_data$voter_category == "always")
-sometimesvoters <- subset(clean_data, clean_data$voter_category == "sporadic")
-
 #create subset we want to study: people who rarely vote and sometimes vote
-survey_data <- subset(clean_data, clean_data$voter_category != "always")
+nonvoters <- subset(clean_data, clean_data$voter_category != "always")
 
-#---- DATA EXPLORATION ----
+#---- DATA ANALYSIS ----
 
-#
+#view distribution of age among non-voters
+hist(nonvoters$ppage)
+mean(nonvoters$ppage)
+
+#BAR GRAPH OF FOR WHY NONVOTERS CHOOSE NOT TO VOTE
+
+#Reason 1: Disliked all candidates
+nonvoters %>%
+  group_by(voter_category) %>%
+  summarise(numberOfPeople=countNum(Q29_1)) %>%
+  ggplot(aes(x = voter_category, y=numberOfPeople))  +
+  geom_col() + 
+  theme(axis.text.x= element_text(angle = 45, hjust= 1)) + 
+  ggtitle("Disliked all candidates") +
+  xlab("Type of Voter") + ylab("Number of Voters") +
+  ylim(0, 400)
+
+#Reason 2: Vote doesn't matter where I live
+nonvoters %>%
+  group_by(voter_category) %>%
+  summarise(numberOfPeople=countNum(Q29_2)) %>%
+  ggplot(aes(x = voter_category, y=numberOfPeople))  +
+  geom_col() + 
+  theme(axis.text.x= element_text(angle = 45, hjust= 1)) + 
+  ggtitle("Vote doesn't matter where I live") +
+  xlab("Type of Voter") + ylab("Number of Voters") +
+  ylim(0, 400)
+
+#Reason 3: Nothing will change no matter who wins
+nonvoters %>%
+  group_by(voter_category) %>%
+  summarise(numberOfPeople=countNum(Q29_3)) %>%
+  ggplot(aes(x = voter_category, y=numberOfPeople))  +
+  geom_col() + 
+  theme(axis.text.x= element_text(angle = 45, hjust= 1)) + 
+  ggtitle("Nothing will change no matter who wins") +
+  xlab("Type of Voter") + ylab("Number of Voters") +
+  ylim(0, 400)
+
+#Reason 4: System is too broken to be fixed by voting
+nonvoters %>%
+  group_by(voter_category) %>%
+  summarise(numberOfPeople=countNum(Q29_4)) %>%
+  ggplot(aes(x = voter_category, y=numberOfPeople))  +
+  geom_col() + 
+  theme(axis.text.x= element_text(angle = 45, hjust= 1)) + 
+  ggtitle("System is too broken to be fixed by voting") +
+  xlab("Type of Voter") + ylab("Number of Voters") +
+  ylim(0, 400)
+
+#Reason 5: Something came up
+nonvoters %>%
+  group_by(voter_category) %>%
+  summarise(numberOfPeople=countNum(Q29_5)) %>%
+  ggplot(aes(x = voter_category, y=numberOfPeople))  +
+  geom_col() + 
+  theme(axis.text.x= element_text(angle = 45, hjust= 1)) + 
+  ggtitle("Something came up") +
+  xlab("Type of Voter") + ylab("Number of Voters") +
+  ylim(0, 400)
+
+
+#Reason 6: Unsure of voter eligibility
+nonvoters %>%
+  group_by(voter_category) %>%
+  summarise(numberOfPeople=countNum(Q29_6)) %>%
+  ggplot(aes(x = voter_category, y=numberOfPeople))  +
+  geom_col() + 
+  theme(axis.text.x= element_text(angle = 45, hjust= 1)) + 
+  ggtitle("Unsure of voter eligibility") +
+  xlab("Type of Voter") + ylab("Number of Voters") +
+  ylim(0, 400)
+
+#Reason 7: Issues important to me not discussed
+nonvoters %>%
+  group_by(voter_category) %>%
+  summarise(numberOfPeople=countNum(Q29_7)) %>%
+  ggplot(aes(x = voter_category, y=numberOfPeople))  +
+  geom_col() + 
+  theme(axis.text.x= element_text(angle = 45, hjust= 1)) + 
+  ggtitle("Issues important to me not discussed") +
+  xlab("Type of Voter") + ylab("Number of Voters") +
+  ylim(0, 400)
+
+#Reason 8: Candidates are all the same
+nonvoters %>%
+  group_by(voter_category) %>%
+  summarise(numberOfPeople=countNum(Q29_8)) %>%
+  ggplot(aes(x = voter_category, y=numberOfPeople))  +
+  geom_col() + 
+  theme(axis.text.x= element_text(angle = 45, hjust= 1)) + 
+  ggtitle("Candidates are all the same") +
+  xlab("Type of Voter") + ylab("Number of Voters") +
+  ylim(0, 400)
+
+#Reason 9: Don't believe in voting
+nonvoters %>%
+  group_by(voter_category) %>%
+  summarise(numberOfPeople=countNum(Q29_9)) %>%
+  ggplot(aes(x = voter_category, y=numberOfPeople))  +
+  geom_col() + 
+  theme(axis.text.x= element_text(angle = 45, hjust= 1)) + 
+  ggtitle("Don't believe in voting") +
+  xlab("Type of Voter") + ylab("Number of Voters") +
+  ylim(0, 400)
+
+
+#BAR GRAPH FOR EACH BARRIER NONVOTERS FACE WHEN TRYING TO VOTE
+
+#Barrier 1: Told they didn't have proper ID
+nonvoters %>%
+  group_by(voter_category) %>%
+  summarise(numberOfPeople=countNum(Q18_1)) %>%
+  ggplot(aes(x = voter_category, y=numberOfPeople))  +
+  geom_col() + 
+  theme(axis.text.x= element_text(angle = 45, hjust= 1)) + 
+  ggtitle("Told they didn't have proper ID") +
+  xlab("Type of Voter") + ylab("Number of Voters") +
+  ylim(0, 600)
+
+#Barrier 2: Couldn't find polling place
+nonvoters %>%
+  group_by(voter_category) %>%
+  summarise(numberOfPeople=countNum(Q18_2)) %>%
+  ggplot(aes(x = voter_category, y=numberOfPeople))  +
+  geom_col() + 
+  theme(axis.text.x= element_text(angle = 45, hjust= 1)) + 
+  ggtitle("Couldn't find polling place") +
+  xlab("Type of Voter") + ylab("Number of Voters") +
+  ylim(0, 600)
+
+#Barrier 3: Missed voter registration deadline
+nonvoters %>%
+  group_by(voter_category) %>%
+  summarise(numberOfPeople=countNum(Q18_3)) %>%
+  ggplot(aes(x = voter_category, y=numberOfPeople))  +
+  geom_col() + 
+  theme(axis.text.x= element_text(angle = 45, hjust= 1)) + 
+  ggtitle("Missed voter registration deadline") +
+  xlab("Type of Voter") + ylab("Number of Voters") +
+  ylim(0, 600)
+
+
+#Barrier 4: Unable to physically access polling place
+nonvoters %>%
+  group_by(voter_category) %>%
+  summarise(numberOfPeople=countNum(Q18_4)) %>%
+  ggplot(aes(x = voter_category, y=numberOfPeople))  +
+  geom_col() + 
+  theme(axis.text.x= element_text(angle = 45, hjust= 1)) + 
+  ggtitle("Unable to physically access polling place") +
+  xlab("Type of Voter") + ylab("Number of Voters") +
+  ylim(0, 600)
+
+#Barrier 5: Couldn't obtain necessary assistance to fill out ballot
+nonvoters %>%
+  group_by(voter_category) %>%
+  summarise(numberOfPeople=countNum(Q18_5)) %>%
+  ggplot(aes(x = voter_category, y=numberOfPeople))  +
+  geom_col() + 
+  theme(axis.text.x= element_text(angle = 45, hjust= 1)) + 
+  ggtitle("Couldn't obtain necessary assistance to fill out ballot") +
+  xlab("Type of Voter") + ylab("Number of Voters") +
+  ylim(0, 600)
+
+#Barrier 6: Required to cast provisional ballot
+nonvoters %>%
+  group_by(voter_category) %>%
+  summarise(numberOfPeople=countNum(Q18_6)) %>%
+  ggplot(aes(x = voter_category, y=numberOfPeople))  +
+  geom_col() + 
+  theme(axis.text.x= element_text(angle = 45, hjust= 1)) + 
+  ggtitle("Required to cast provisional ballot") +
+  xlab("Type of Voter") + ylab("Number of Voters") +
+  ylim(0, 600)
+
+#Barrier 7: Couldn't get off work
+nonvoters %>%
+  group_by(voter_category) %>%
+  summarise(numberOfPeople=countNum(Q18_7)) %>%
+  ggplot(aes(x = voter_category, y=numberOfPeople))  +
+  geom_col() + 
+  theme(axis.text.x= element_text(angle = 45, hjust= 1)) + 
+  ggtitle("Couldn't get off work") +
+  xlab("Type of Voter") + ylab("Number of Voters") +
+  ylim(0, 600)
+
+#Barrier 8: Wait more than 1 hour in line
+nonvoters %>%
+  group_by(voter_category) %>%
+  summarise(numberOfPeople=countNum(Q18_8)) %>%
+  ggplot(aes(x = voter_category, y=numberOfPeople))  +
+  geom_col() + 
+  theme(axis.text.x= element_text(angle = 45, hjust= 1)) + 
+  ggtitle("Wait more than 1 hour in line") +
+  xlab("Type of Voter") + ylab("Number of Voters") +
+  ylim(0, 600)
+
+#Barrier 9: Told name isn't listed even though they registered
+nonvoters %>%
+  group_by(voter_category) %>%
+  summarise(numberOfPeople=countNum(Q18_9)) %>%
+  ggplot(aes(x = voter_category, y=numberOfPeople))  +
+  geom_col() + 
+  theme(axis.text.x= element_text(angle = 45, hjust= 1)) + 
+  ggtitle("Told name isn't listed even though they registered") +
+  xlab("Type of Voter") + ylab("Number of Voters") +
+  ylim(0, 600)
+
+#Barrier 10: Absentee ballot delivered too late
+nonvoters %>%
+  group_by(voter_category) %>%
+  summarise(numberOfPeople=countNum(Q18_10)) %>%
+  ggplot(aes(x = voter_category, y=numberOfPeople))  +
+  geom_col() + 
+  theme(axis.text.x= element_text(angle = 45, hjust= 1)) + 
+  ggtitle("Absentee ballot delivered too late") +
+  xlab("Type of Voter") + ylab("Number of Voters") +
+  ylim(0, 600)
+
+#How many nonvoters find it easy to vote
+hist(nonvoters$Q16)
 
 
 #---- DATA MODELING ----
 
-#
+bars <- c('Q18_1', 'Q18_2', 'Q18_3', 'Q18_4', 'Q18_5', 'Q18_6', 'Q18_7', 'Q18_8', 'Q18_9', 'Q18_10')
+timesHappened <- c(countNum(clean_data$Q18_1), countNum(clean_data$Q18_2), countNum(clean_data$Q18_3), countNum(clean_data$Q18_4), countNum(clean_data$Q18_5), countNum(clean_data$Q18_6), countNum(clean_data$Q18_7), countNum(clean_data$Q18_8), countNum(clean_data$Q18_9), countNum(clean_data$Q18_10))
+barriers <- data.frame(bars, timesHappened)
+barriers
+
+#Linear model
+
+# Build linear model to predict voter type based on Barriers to voting
+model1 <- lm(medv ~ crim+rm+dis, clean_data)
+
+summary(model1)
+
+#9: One row df with values of predictors
+predDF <- data.frame(crim = 0.26, dis = 3.2, rm = 6.2)
+
+#10: predict new value of medv from df
+predict(model1, predDF)
+
+#view scatter plot to visualize the model
+plot(clean_data$Q18_1, clean_data$voter_category)
+abline(model1)
+
+
+#SVM model
+
+# Build SVM model to predict who will be a detractor
+# use Eating.and.Drinking.at.Airport attribute + Type.of.Travel attribute
+
+#convert is.Detractor to a factor
+cleanSurvey$is.Detractor <- as.factor(cleanSurvey$is.Detractor)
+
+#generate list of cases for training data
+trainList <- createDataPartition(y=cleanSurvey$is.Detractor, p=0.05, list=FALSE)
+
+#create training set
+trainSet <- cleanSurvey[trainList,]
+str(trainSet)
+
+#create test set
+testSet <- cleanSurvey[-trainList,]
+str(testSet)
+
+#Train SVM model
+svmModel <- ksvm(is.Detractor ~ Eating.and.Drinking.at.Airport + Type.of.Travel, data=trainSet, C=5, cross=3)
+svmModel
+
+
+#Association Rules model
+
+# Create association rules that predict if someone will be a nonvoter
+
+#create a data frame with attributes that make sense to affect not voting
+#convert those attributes to factors
+surveyDF <- data.frame(status = as.factor(cleanSurvey$Airline.Status),
+                       pricesense = as.factor(cleanSurvey$Price.Sensitivity),
+                       loyalty = as.factor(cleanSurvey$Loyalty),
+                       typeoftravel = as.factor(cleanSurvey$Type.of.Travel),
+                       totalfreqflyeracc = as.factor(cleanSurvey$Total.Freq.Flyer.Accts),
+                       shopamount = as.factor(round(cleanSurvey$Shopping.Amount.at.Airport, digits=-2)),
+                       eatanddrink = as.factor(cleanSurvey$Eating.and.Drinking.at.Airport),
+                       class = as.factor(cleanSurvey$Class),
+                       partnername = as.factor(cleanSurvey$Partner.Name),
+                       originstate = as.factor(cleanSurvey$Origin.State),
+                       destinationstate = as.factor(cleanSurvey$Destination.State),
+                       flightcancel = as.factor(cleanSurvey$Flight.cancelled),
+                       arrivaldelay = as.factor(cleanSurvey$is.Arrival.Delayed),
+                       detractor = cleanSurvey$is.Detractor)
+
+
+#convert surveyDF to transactions data set
+surveyTrans <- as(surveyDF, "transactions")
+
+
+# Show top 10 rules based on confidence of rule
+rules1	<- apriori(surveyTrans,	
+                  parameter=list(supp=0.110,	conf=0.700),	
+                  appearance=list(default="lhs",rhs=("detractor=TRUE")))
+
+rules1
+summary(rules1)
+inspect(rules1)
+plot(rules1)
 
 
 
 
-#plot()
 
 
 #---- INSIGHTS ----
